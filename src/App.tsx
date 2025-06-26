@@ -31,10 +31,10 @@ export const App = () => {
 
   const [error, setError] = useState<string>('');
   const [postsError, setPostsError] = useState('');
+  const [commentsError, setCommentsError] = useState('');
 
   const [comments, setComments] = useState<Comment[]>([]);
   const [isLoadingComments, setIsLoadingComments] = useState(false);
-  const [commentsError, setCommentsError] = useState('');
 
   const handleUserSelect = (userId: number) => {
     const wantedUser = userList.find(user => user.id === userId) || null;
@@ -52,7 +52,7 @@ export const App = () => {
 
     deleteComment(commentId).catch(() => {
       getComments(selectedPost!.id).then(setComments);
-      setError('Unable to delete a comment');
+      setCommentsError('Unable to delete a comment');
     });
   };
 
@@ -62,8 +62,7 @@ export const App = () => {
         setComments([...comments, newComment]);
       })
       .catch(() => {
-        setError('Unable to add a comment');
-        throw new Error('Failed to add comment');
+        setCommentsError('Unable to add a comment');
       });
   };
 
